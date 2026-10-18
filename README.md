@@ -14,7 +14,6 @@ rather than short.
 
 No audio ever leaves the device.
 
-Demo video: [https://youtu.be/L2f7_JEyAMo?is=C4B9nGiG7tyDvviP](https://youtu.be/uSCUW3bBSmk)
 
 ---
 
