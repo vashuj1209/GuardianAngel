@@ -1,108 +1,129 @@
 # Guardian Angel
 
-**A personal safety agent for Android that runs entirely on your phone.**
+**An Android safety companion that puts discreet, voice-activated support within reach.**
 
-Say a wake word and Angel starts recording and transcribing — silently, with no sound and
-nothing on screen. She works out from what she hears whether the situation is actually
-escalating, and only then texts the people you chose, with your location. Codewords, said
-while she is already listening, tell her what to do without anyone noticing you said
-anything at all.
+When a situation feels unsafe, reaching for your phone may be difficult. Guardian Angel lets you activate recording and transcription with a wake word, then use personal codewords to request help without navigating a screen.
 
-She also tries to keep you out of trouble in the first place: a live safety score, a map
-of where incidents have actually been reported, and a route home chosen for being safe
-rather than short.
+Angel processes audio directly on your phone. It can assess signs of escalation and alert your chosen contacts with your location. You can also use codewords to explicitly trigger an alert, call your first guardian, or send an all-clear.
 
-No audio ever leaves the device.
+Before anything happens, Angel helps you make informed travel choices with safety estimates, reported-incident maps, and routes that consider lighting and nearby safe places.
 
+**All audio processing happens on your device. No audio is uploaded.**
 
 ---
 
-## Who it is for
+## Who it’s for
 
-Women who are alone and uneasy — walking home at night, meeting someone from an app for
-the first time, stuck somewhere that has started to feel wrong.
+Guardian Angel is designed for women navigating moments of uncertainty: walking home at night, meeting someone new, or finding themselves somewhere that no longer feels comfortable.
 
-The design follows from that one audience, and from one observation: by the time you are
-*certain* something is wrong, getting your phone out is the thing you can least afford to
-do. So nothing about Angel requires looking at a screen, and nothing she does is visible
-to whoever you are with.
+Its core interactions are built around a simple need: being able to ask for support without unlocking a phone or drawing attention to a screen.
 
-Built for women, by women.
+**Built for women, by women.**
 
 ---
 
 ## How it works
 
-### Staying out of danger
+### Plan your journey
 
-- **Safety score** — a live estimate from reported crime data, time of day, street
-  lighting and how far you are from home. 100 at your own front door; it starts falling
-  the moment you leave. Presented as a band and a reason, never as a guarantee.
-- **The map** — incident clusters drawn from Berkeley PD and UCPD open data in 150 m
-  privacy cells, 24/7 safe havens, and your own saved safe places.
-- **Safest route** — pick a destination and compare corridors by safety, lighting and how
-  many safe havens are on the way, not just by how long they take.
+- **Safety estimates:** View a live estimate based on reported crime data, time of day, street lighting, and distance from home. Scores include a band and an explanation to help you understand the estimate.
+- **Incident map:** Explore Berkeley PD and UCPD incident clusters grouped into 150-meter privacy cells, alongside designated 24/7 safe havens and your saved safe places.
+- **Route comparison:** Compare routes using safety indicators, lighting, nearby safe havens, and travel time.
 
-### Walking with you
+Safety estimates reflect the available data. They do not guarantee that a location or route is safe.
 
-Choose a route and tap **Walk with Angel**. Only that route stays drawn, and the search
-bar is replaced by one instruction at a time. The walk is a stored journey followed by a
-foreground service, so it keeps going when you lock the phone, pocket it or switch apps.
-When you arrive, Angel can text whoever you picked — with the time you got there — so you
-don't have to remember to.
+### Walk with Angel
 
-### When something happens
+Choose a route and tap **Walk with Angel** to begin a guided journey. The map focuses on your selected route and displays one instruction at a time.
 
-| You do this                                | Angel does this                                 |
-|--------------------------------------------|-------------------------------------------------|
-| Say your **wake word**                     | Starts recording and transcribing, silently     |
-| Say your **Caution** codeword              | Keeps a record, tells nobody                    |
-| Say your **Danger** codeword, or hold SOS  | Texts your whole circle with a live map link    |
-| Say your **Emergency** codeword            | That, and rings your first guardian             |
-| Say your **Safe** codeword                 | Cancels anything pending, sends the all-clear   |
+An Android foreground service keeps your journey active when you lock your phone, put it in your pocket, or switch apps. When you arrive, Angel can send your chosen contact an arrival message with the time you reached your destination.
 
-3
-### What you get afterwards
+### Get support with your voice
 
-A session timeline with the transcript, labelled by speaker — including voices that are
-not yours. Sounds that speech can't capture: a scream, an impact, breaking glass. The path
-you walked, with the moments worth looking at pinned to where they happened. And a title
-and summary written once the recording closes. Yours to export, or to delete.
+Once Angel is listening, personal codewords let you choose the response you need.
 
-### The stack
+| Your action | Angel’s response |
+|---|---|
+| Say your **wake word** | Starts recording and transcribing without an audible cue or opening an on-screen recording interface. |
+| Say your **Caution** codeword | Keeps a record without notifying your contacts. |
+| Say your **Danger** codeword or hold **SOS** | Sends your guardian circle an alert with a live map link. |
+| Say your **Emergency** codeword | Sends the alert and calls your first guardian. |
+| Say your **Safe** codeword | Cancels pending actions and sends an all-clear. |
 
-Everything that listens runs locally.
+### Review your session
 
-|               |                                                                       |
-|---------------|-----------------------------------------------------------------------|
-| Wake word     | sherpa-onnx keyword spotting (zipformer) — any phrase, no retraining  |
-| Your voice    | CAM++ 512-d voiceprint, AES-GCM encrypted in the Android Keystore     |
-| Transcription | Moonshine Tiny + Silero VAD, streaming, on device                     |
-| Sound events  | YAMNet via LiteRT — 521 AudioSet classes                              |
-| App           | Kotlin · Jetpack Compose · Material 3 · Room (v5, real migrations)    |
-| Map           | Google Maps Compose · fused location · BPD/UCPD open data · NWS       |
+After a recording ends, Angel brings the session together in a timeline:
+
+- A transcript with speaker labels.
+- Detected sound events, such as screams, impacts, or breaking glass.
+- Your recorded route, with relevant moments marked by location.
+- A session title and summary.
+
+You control whether to export or delete the session.
 
 ---
 
-## Running it
+## Technology
+
+Wake-word detection, voice identification, transcription, and sound-event detection all run locally.
+
+| Component | Technology |
+|---|---|
+| Wake-word detection | sherpa-onnx keyword spotting with Zipformer; supports custom phrases without retraining |
+| Voice identification | CAM++ 512-dimensional voiceprint, protected with AES-GCM encryption using the Android Keystore |
+| Transcription | Moonshine Tiny with Silero VAD for streaming, on-device speech recognition |
+| Sound-event detection | YAMNet via LiteRT, covering 521 AudioSet classes |
+| Android app | Kotlin, Jetpack Compose, Material 3, and Room v5 with database migrations |
+| Maps and context | Google Maps Compose, fused location services, Berkeley PD/UCPD open data, and NWS |
+
+---
+
+## Build and run
+
+### Configure maps
+
+Add a Google Maps API key by following [the Berkeley Maps setup guide](docs/BERKELEY_MAPS_SETUP.md).
+
+The placeholder key does not load map content. If the map appears blank, check your API key configuration first.
+
+### Run the app and tests
 
 ```bash
-./gradlew :app:assembleDebug              # build
-./gradlew :app:testDebugUnitTest          # 206 unit tests
-./gradlew :app:connectedDebugAndroidTest  # 58 instrumented tests, needs a device
+# Build the debug APK
+./gradlew :app:assembleDebug
+
+# Run local unit tests
+./gradlew :app:testDebugUnitTest
+
+# Run instrumented tests on a connected device or emulator
+./gradlew :app:connectedDebugAndroidTest
+
+# Install on a connected device or emulator
 ./gradlew :app:installDebug
 ```
 
-You need to supply a Google Maps API key — see
-[docs/BERKELEY_MAPS_SETUP.md](docs/BERKELEY_MAPS_SETUP.md). With the placeholder key the
-map renders nothing at all rather than failing, which looks like a bug and isn't.
+### Enable SMS alerts
 
-Silent SMS needs `SEND_SMS`, which the app asks for when you add a guardian. Without it an
-alert opens a pre-filled composer and waits for one tap, and the app tells you which of
-the two you have.
+Guardian Angel requests the `SEND_SMS` permission when you add a guardian.
 
-**This is a hackathon build.** Transcripts are stored unencrypted, the wake-word
-thresholds have not been tuned against real speech in real rooms, and the APK is 269 MB
-with the models bundled. Don't put anything you'd mind losing into it yet.
+- **With permission:** Angel can send SMS alerts directly.
+- **Without permission:** Angel opens a prefilled message that requires you to tap Send.
+
+The app indicates which sending method is available.
+
+---
+
+## Prototype status and limitations
+
+**Guardian Angel is a hackathon prototype.** Its safety features need further validation before being relied on in real-world emergencies.
+
+Current limitations include:
+
+- **Unencrypted transcripts:** Voiceprints are encrypted, but stored transcripts are not yet encrypted.
+- **Wake-word calibration:** Detection thresholds have not yet been tuned and validated across real-world voices, rooms, and background noise.
+- **App size:** The APK is approximately 269 MB because audio models are bundled for local processing.
+- **Alert dependencies:** Sending messages and sharing location depend on the required permissions, device capabilities, and connectivity.
+
+Use controlled scenarios and non-sensitive recordings when evaluating the prototype.
 
 ---
