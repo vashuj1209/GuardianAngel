@@ -55,8 +55,13 @@ def create_safety_plan(request: SafetyPlanRequest):
                     "content": request.trip_description,
                 },
             ],
-            temperature=0.3,
-            max_tokens=400,
+                    temperature=0.3,
+            max_tokens=600,
+            extra_body={
+                "chat_template_kwargs": {
+                    "enable_thinking": False
+                }
+            },
         )
 
         plan = response.choices[0].message.content
